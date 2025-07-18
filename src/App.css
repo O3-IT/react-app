@@ -1,0 +1,1592 @@
+.app {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #ffffff;
+  color: #333333;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app.theme-dark {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+.app.theme-blue {
+  background-color: #f0f8ff;
+  color: #003366;
+}
+
+.app.theme-green {
+  background-color: #f8fff8;
+  color: #1a5928;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.app.theme-dark .header {
+  background-color: #2d2d2d;
+  border-bottom: 1px solid #444;
+}
+
+.app.theme-blue .header {
+  background-color: #e6f3ff;
+  border-bottom: 1px solid #cce7ff;
+}
+
+.app.theme-green .header {
+  background-color: #e8f5e8;
+  border-bottom: 1px solid #d4edda;
+}
+
+.header h1 {
+  margin: 0;
+  color: #2c3e50;
+}
+
+.app.theme-dark .header h1 {
+  color: #ecf0f1;
+}
+
+.app.theme-blue .header h1 {
+  color: #003366;
+}
+
+.app.theme-green .header h1 {
+  color: #1a5928;
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background-color: #f0f0f0;
+}
+
+.app.dark-mode .theme-toggle {
+  border-color: #555;
+}
+
+.app.dark-mode .theme-toggle:hover {
+  background-color: #444;
+}
+
+.tabs {
+  display: flex;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 2rem;
+}
+
+.app.theme-dark .tabs {
+  background-color: #2d2d2d;
+  border-bottom: 1px solid #444;
+}
+
+.app.theme-blue .tabs {
+  background-color: #e6f3ff;
+  border-bottom: 1px solid #cce7ff;
+}
+
+.app.theme-green .tabs {
+  background-color: #e8f5e8;
+  border-bottom: 1px solid #d4edda;
+}
+
+.tab {
+  padding: 1rem 1.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  color: #666;
+}
+
+.tab:hover {
+  background-color: #f0f0f0;
+}
+
+.tab.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+}
+
+.app.theme-dark .tab {
+  color: #ccc;
+}
+
+.app.theme-dark .tab:hover {
+  background-color: #444;
+}
+
+.app.theme-dark .tab.active {
+  color: #4dabf7;
+  border-bottom-color: #4dabf7;
+}
+
+.app.theme-blue .tab {
+  color: #0066cc;
+}
+
+.app.theme-blue .tab:hover {
+  background-color: #cce7ff;
+}
+
+.app.theme-blue .tab.active {
+  color: #0066cc;
+  border-bottom-color: #0066cc;
+}
+
+.app.theme-green .tab {
+  color: #28a745;
+}
+
+.app.theme-green .tab:hover {
+  background-color: #d4edda;
+}
+
+.app.theme-green .tab.active {
+  color: #28a745;
+  border-bottom-color: #28a745;
+}
+
+.content {
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.add-user-form {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.app.dark-mode .add-user-form {
+  background-color: #2d2d2d;
+}
+
+.add-user-form h3 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.app.dark-mode .add-user-form h3 {
+  color: #ecf0f1;
+}
+
+.add-user-form input {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.app.dark-mode .add-user-form input {
+  background-color: #444;
+  border-color: #555;
+  color: #fff;
+}
+
+.add-user-form button {
+  background-color: #007bff;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.add-user-form button:hover {
+  background-color: #0056b3;
+}
+
+.users-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.user-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.app.dark-mode .user-card {
+  background-color: #2d2d2d;
+  border-color: #444;
+}
+
+.user-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+}
+
+.app.dark-mode .user-info h4 {
+  color: #ecf0f1;
+}
+
+.user-info p {
+  margin: 0.25rem 0;
+  color: #666;
+}
+
+.app.dark-mode .user-info p {
+  color: #ccc;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+.counter-section {
+  text-align: center;
+  padding: 2rem;
+}
+
+.counter-display {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 2px solid #e0e0e0;
+}
+
+.app.dark-mode .counter-display {
+  background-color: #2d2d2d;
+  border-color: #444;
+}
+
+.counter-display h3 {
+  font-size: 2rem;
+  margin: 0;
+  color: #2c3e50;
+}
+
+.app.dark-mode .counter-display h3 {
+  color: #ecf0f1;
+}
+
+.counter-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.counter-controls button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
+}
+
+.counter-controls button:hover {
+  background-color: #0056b3;
+}
+
+.product-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  min-width: 200px;
+}
+
+.app.dark-mode .search-input {
+  background-color: #444;
+  border-color: #555;
+  color: #fff;
+}
+
+.sort-select {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: white;
+}
+
+.app.dark-mode .sort-select {
+  background-color: #444;
+  border-color: #555;
+  color: #fff;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.product-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.app.dark-mode .product-card {
+  background-color: #2d2d2d;
+  border-color: #444;
+}
+
+.product-card h4 {
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+}
+
+.app.dark-mode .product-card h4 {
+  color: #ecf0f1;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #28a745;
+  margin: 0.5rem 0;
+}
+
+.app.dark-mode .price {
+  color: #4caf50;
+}
+
+.category {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+.app.dark-mode .category {
+  color: #ccc;
+}
+
+.buy-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.buy-btn:hover {
+  background-color: #218838;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem;
+  }
+  
+  .tabs {
+    flex-direction: column;
+    padding: 0 1rem;
+  }
+  
+  .tab {
+    text-align: left;
+    border-bottom: none;
+    border-left: 3px solid transparent;
+  }
+  
+  .tab.active {
+    border-left-color: #007bff;
+    border-bottom-color: transparent;
+  }
+  
+  .content {
+    padding: 1rem;
+  }
+  
+  .product-controls {
+    flex-direction: column;
+  }
+  
+  .search-input {
+    min-width: 100%;
+  }
+  
+  .counter-controls {
+    flex-wrap: wrap;
+  }
+  
+  .users-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* CSS avec bugs intentionnels pour les tests QA */
+
+/* Bug #1: Boutons avec mauvais contraste dans le thème sombre */
+.app.theme-dark .btn-primary {
+  background-color: #555555;
+  color: #666666;
+}
+
+/* Bug #2: Formulaires qui cassent sur mobile */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .form-group input {
+    width: 120%;
+    margin-left: -10%;
+  }
+}
+
+/* Bug #3: Notifications qui se chevauchent */
+.notification-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  max-width: 400px;
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  animation: slideIn 0.3s ease;
+  position: relative;
+  z-index: 1000;
+}
+
+.notification-success {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.notification-error {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.notification-warning {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  color: #856404;
+}
+
+.notification-info {
+  background-color: #d1ecf1;
+  border: 1px solid #bee5eb;
+  color: #0c5460;
+}
+
+.notification-icon {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-message {
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.notification-time {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Bug #4: Mauvais positionnement des modals */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  margin: 20px;
+}
+
+.modal-large {
+  max-width: 800px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-header h3 {
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+.app.theme-dark .modal {
+  background-color: #2d2d2d;
+  color: #fff;
+}
+
+.app.theme-dark .close-btn {
+  color: #ccc;
+}
+
+.app.theme-dark .close-btn:hover {
+  color: #fff;
+}
+
+/* Bug #5: Boutons avec mauvais spacing */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  margin: 0.25rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #545b62;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+.btn-small {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.btn-large {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Bug #6: Formulaires avec validation visuelle cassée */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: flex-end;
+}
+
+.form-actions button {
+  min-width: 100px;
+}
+
+.form-group.error input {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.form-group.error label {
+  color: #dc3545;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Bug #7: Problèmes de responsivité dans les tables */
+.table-wrapper {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.data-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #495057;
+}
+
+.app.theme-dark .data-table th {
+  background-color: #343a40;
+  color: #fff;
+}
+
+.app.theme-dark .data-table td {
+  border-bottom-color: #444;
+}
+
+@media (max-width: 600px) {
+  .data-table {
+    font-size: 0.8rem;
+  }
+  
+  .data-table th,
+  .data-table td {
+    padding: 0.5rem 0.25rem;
+  }
+}
+
+/* Bug #8: Problèmes de contraste et accessibilité */
+.status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-confirmed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-cancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Bug #9: Problèmes avec les grilles qui ne s'alignent pas */
+.user-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.user-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.app.theme-dark .user-card {
+  background-color: #2d2d2d;
+  border-color: #444;
+}
+
+/* Bug #10: Pagination avec mauvais alignement */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #f8f9fa;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.app.theme-dark .pagination button {
+  background-color: #2d2d2d;
+  border-color: #444;
+  color: #fff;
+}
+
+.app.theme-dark .pagination button:hover:not(:disabled) {
+  background-color: #444;
+}
+
+/* Bug #11: Compteur avec styles qui ne s'appliquent pas correctement */
+.counter-display {
+  text-align: center;
+  padding: 2rem;
+  margin: 2rem 0;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 2px solid #e0e0e0;
+}
+
+.counter-value {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #007bff;
+  margin: 1rem 0;
+}
+
+.counter-range {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.counter-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.counter-controls button {
+  min-width: 80px;
+  height: 50px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.app.theme-dark .counter-display {
+  background-color: #2d2d2d;
+  border-color: #444;
+}
+
+.app.theme-dark .counter-value {
+  color: #4dabf7;
+}
+
+.app.theme-dark .counter-range {
+  color: #ccc;
+}
+
+/* Bug #12: Styles pour les cartes produits avec problèmes d'espacement */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.product-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.product-info {
+  flex: 1;
+  cursor: pointer;
+}
+
+.product-info h3 {
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+}
+
+.product-price {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #28a745;
+  margin: 0.5rem 0;
+}
+
+.product-category {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+.product-description {
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.product-actions {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.app.theme-dark .product-card {
+  background-color: #2d2d2d;
+  border-color: #444;
+}
+
+.app.theme-dark .product-info h3 {
+  color: #ecf0f1;
+}
+
+.app.theme-dark .product-price {
+  color: #4caf50;
+}
+
+.app.theme-dark .product-category,
+.app.theme-dark .product-description {
+  color: #ccc;
+}
+
+.app.theme-dark .product-actions {
+  border-top-color: #444;
+}
+
+/* Bug #13: Styles pour les thèmes avec problèmes de cohérence */
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.theme-card {
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.theme-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.theme-card.active {
+  border-color: #007bff;
+  background-color: #f8f9ff;
+}
+
+.theme-preview {
+  height: 80px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.theme-color-bar {
+  height: 20px;
+  width: 100%;
+}
+
+.theme-background {
+  height: 60px;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.theme-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.theme-accent {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.theme-info h3 {
+  margin: 0.5rem 0;
+  color: #2c3e50;
+}
+
+.theme-info p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.theme-current {
+  color: #007bff;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+/* Bug #14: Styles pour les filtres avec problèmes d'alignement */
+.user-filters,
+.catalog-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  align-items: flex-start;
+}
+
+.search-container {
+  flex: 1;
+  min-width: 250px;
+}
+
+.search-history {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+.search-history small {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.history-item {
+  display: inline-block;
+  margin: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background-color: #e9ecef;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.2s ease;
+}
+
+.history-item:hover {
+  background-color: #dee2e6;
+}
+
+.sort-controls,
+.filter-controls,
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sort-order-btn {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+  min-width: 40px;
+}
+
+.sort-order-btn:hover {
+  background-color: #f8f9fa;
+}
+
+.app.theme-dark .search-history {
+  background-color: #2d2d2d;
+  border-color: #444;
+}
+
+.app.theme-dark .history-item {
+  background-color: #444;
+  color: #fff;
+}
+
+.app.theme-dark .history-item:hover {
+  background-color: #555;
+}
+
+.app.theme-dark .sort-order-btn {
+  background-color: #2d2d2d;
+  border-color: #444;
+  color: #fff;
+}
+
+.app.theme-dark .sort-order-btn:hover {
+  background-color: #444;
+}
+
+/* Bug #15: Styles pour le header avec problèmes d'espacement */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+}
+
+.status-indicator {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.status-indicator.online {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-indicator.offline {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.help-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.help-button:hover {
+  background-color: #f8f9fa;
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.app.theme-dark .help-button {
+  background-color: #2d2d2d;
+  border-color: #444;
+  color: #fff;
+}
+
+.app.theme-dark .help-button:hover {
+  background-color: #444;
+  border-color: #4dabf7;
+  color: #4dabf7;
+}
+
+/* Bug #16: Styles pour les tabs avec problèmes de navigation */
+.tabs {
+  display: flex;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 2rem;
+  overflow-x: auto;
+}
+
+.tab {
+  padding: 1rem 1.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  color: #666;
+  text-decoration: none;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tab:hover {
+  background-color: #f0f0f0;
+  text-decoration: none;
+}
+
+.tab.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+}
+
+.tab-count {
+  background-color: #e9ecef;
+  color: #495057;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.tab.active .tab-count {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Bug #17: Styles pour les résultats avec problèmes d'affichage */
+.user-results,
+.catalog-results {
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  border-left: 4px solid #007bff;
+}
+
+.no-results {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  padding: 2rem;
+}
+
+.app.theme-dark .user-results,
+.app.theme-dark .catalog-results {
+  background-color: #2d2d2d;
+  border-left-color: #4dabf7;
+}
+
+.app.theme-dark .no-results {
+  color: #ccc;
+}
+
+/* Bug #18: Styles pour le panier avec problèmes d'interaction */
+.cart-items {
+  max-height: 400px;
+  overflow-y: auto;
+  margin: 1rem 0;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  gap: 1rem;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+}
+
+.item-info p {
+  margin: 0;
+  color: #666;
+}
+
+.item-quantity {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.qty-btn {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ddd;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.qty-btn:hover:not(:disabled) {
+  background-color: #f8f9fa;
+}
+
+.qty-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.item-total {
+  font-weight: bold;
+  color: #28a745;
+  min-width: 80px;
+  text-align: right;
+}
+
+.cart-total {
+  padding: 1rem;
+  border-top: 2px solid #e0e0e0;
+  text-align: right;
+  font-size: 1.2rem;
+}
+
+.cart-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: flex-end;
+}
+
+.app.theme-dark .cart-item {
+  border-bottom-color: #444;
+}
+
+.app.theme-dark .item-info h4 {
+  color: #ecf0f1;
+}
+
+.app.theme-dark .item-info p {
+  color: #ccc;
+}
+
+.app.theme-dark .qty-btn {
+  background-color: #2d2d2d;
+  border-color: #444;
+  color: #fff;
+}
+
+.app.theme-dark .qty-btn:hover:not(:disabled) {
+  background-color: #444;
+}
+
+.app.theme-dark .item-total {
+  color: #4caf50;
+}
+
+.app.theme-dark .cart-total {
+  border-top-color: #444;
+}
+
+/* Bug #19: Styles pour les métriques avec problèmes d'alignement */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.metric-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.metric-card h3 {
+  margin: 0 0 1rem 0;
+  color: #666;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin: 0.5rem 0;
+}
+
+.metric-change {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.app.theme-dark .metric-card {
+  background-color: #2d2d2d;
+  border-color: #444;
+}
+
+.app.theme-dark .metric-card h3 {
+  color: #ccc;
+}
+
+.app.theme-dark .metric-value {
+  color: #ecf0f1;
+}
+
+.app.theme-dark .metric-change {
+  color: #ccc;
+}
+
+/* Bug #20: Styles pour les graphiques avec problèmes de visualisation */
+.dashboard-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.chart-container {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.chart-container h3 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+}
+
+.chart-data {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.chart-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.chart-label {
+  min-width: 120px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.chart-bar {
+  flex: 1;
+  height: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.chart-fill {
+  height: 100%;
+  background-color: #007bff;
+  transition: width 0.3s ease;
+}
+
+.chart-value {
+  min-width: 40px;
+  text-align: right;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.app.theme-dark .chart-container {
+  background-color: #2d2d2d;
+  border-color: #444;
+}
+
+.app.theme-dark .chart-container h3 {
+  color: #ecf0f1;
+  border-bottom-color: #444;
+}
+
+.app.theme-dark .chart-label {
+  color: #ccc;
+}
+
+.app.theme-dark .chart-bar {
+  background-color: #444;
+}
+
+.app.theme-dark .chart-fill {
+  background-color: #4dabf7;
+}
+
+.app.theme-dark .chart-value {
+  color: #ecf0f1;
+}
