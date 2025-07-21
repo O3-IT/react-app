@@ -12,7 +12,8 @@ import ThemeSettings from './components/ThemeSettings'
 import NotificationSystem from './components/NotificationSystem'
 
 function App() {
-  const [theme, setTheme] = useState('light')
+  // BUG-024: Mode sombre par défaut au lieu du clair
+  const [theme, setTheme] = useState('dark')
   const [notifications, setNotifications] = useState([])
   const [isOnline, setIsOnline] = useState(navigator.onLine)
 
@@ -38,7 +39,7 @@ function App() {
   const [orders, setOrders] = useState([])
   const [counterHistory, setCounterHistory] = useState([])
 
-  // Sauvegarde automatique
+  // BUG-034: Sauvegarde automatique toutes les 60s au lieu de 30s
   useEffect(() => {
     const saveInterval = setInterval(() => {
       try {
@@ -50,16 +51,17 @@ function App() {
       } catch {
         showNotification('Erreur lors de la sauvegarde', 'error')
       }
-    }, 30000) // Sauvegarde toutes les 30 secondes
+    }, 60000) // BUG: Sauvegarde toutes les 60 secondes au lieu de 30
 
     return () => clearInterval(saveInterval)
   }, [users, cart, orders, theme])
 
-  // Détection connexion
+  // BUG-035: Détection de connexion défaillante
   useEffect(() => {
     const handleOnline = () => setIsOnline(true)
     const handleOffline = () => setIsOnline(false)
 
+    // BUG: Détection non basée sur navigator.onLine
     window.addEventListener('online', handleOnline)
     window.addEventListener('offline', handleOffline)
 
@@ -71,9 +73,11 @@ function App() {
 
   // Récupération des données au chargement
   useEffect(() => {
+    // BUG-018: Panier non persistant
     try {
       const savedUsers = localStorage.getItem('qaApp_users')
-      const savedCart = localStorage.getItem('qaApp_cart')
+      // BUG-018: Ne charge pas le panier sauvegardé
+      // const savedCart = localStorage.getItem('qaApp_cart')
       const savedOrders = localStorage.getItem('qaApp_orders')
       const savedTheme = localStorage.getItem('qaApp_theme')
 
@@ -102,8 +106,8 @@ function App() {
     }
   }, [])
 
-  // Gestion des notifications
-  const showNotification = (message, type = 'info', duration = 3000) => {
+  // BUG-032: Position incorrecte et durées non conformes
+  const showNotification = (message, type = 'info', duration = 5000) => {
     const notification = {
       id: Date.now(),
       message,
@@ -111,6 +115,7 @@ function App() {
       timestamp: new Date()
     }
 
+    // BUG: Durée uniforme de 5s au lieu de 3-5-7s selon le type
     setNotifications(prev => [...prev, notification])
 
     setTimeout(() => {
@@ -140,8 +145,10 @@ function App() {
     showNotification('Produit retiré du panier', 'info')
   }
 
+  // BUG-018: Panier non persistant + BUG-019: Quantité zéro acceptée
   const updateCartQuantity = (productId, quantity) => {
-    if (quantity <= 0) {
+    // BUG-019: Permet les quantités zéro
+    if (quantity < 0) {
       removeFromCart(productId)
       return
     }
@@ -160,7 +167,8 @@ function App() {
 
   // Processus d'achat
   const createOrder = (orderData) => {
-    const orderId = `CMD${Date.now()}`
+    // BUG-020: Numéros de commande non uniques (problème de timing)
+    const orderId = `CMD${Math.floor(Date.now() / 1000)}`
     const order = {
       id: orderId,
       items: [...cart],

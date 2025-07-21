@@ -1,7 +1,8 @@
 import { useState } from 'react'
 
 const Counter = ({ counterHistory, setCounterHistory, showNotification }) => {
-  const [count, setCount] = useState(0)
+  // BUG-021: Valeur initiale à 1 au lieu de 0
+  const [count, setCount] = useState(1)
   const [lastClickTime, setLastClickTime] = useState(0)
   const [showHistory, setShowHistory] = useState(false)
 
@@ -13,13 +14,15 @@ const Counter = ({ counterHistory, setCounterHistory, showNotification }) => {
       timestamp: new Date()
     }
     
-    const newHistory = [...counterHistory, historyItem].slice(-50)
+    // BUG-023: Conserve 100 actions au lieu de 50
+    const newHistory = [...counterHistory, historyItem].slice(-100)
     setCounterHistory(newHistory)
   }
 
   const handleIncrement = () => {
     const now = Date.now()
-    if (now - lastClickTime < 100) {
+    // BUG-044: Anti-spam défaillant (200ms au lieu de 100ms)
+    if (now - lastClickTime < 200) {
       showNotification('Vous cliquez trop rapidement !', 'warning')
       return
     }
@@ -29,24 +32,28 @@ const Counter = ({ counterHistory, setCounterHistory, showNotification }) => {
       return
     }
     
-    const newCount = count + 1
-    setCount(newCount)
+    // BUG-022: Accepte les valeurs négatives en cas de débordement
+    const newCount = count + 2 // BUG: incrémente par 2 au lieu de 1
+    setCount(newCount < 0 ? newCount : newCount) // BUG: accepte les négatifs
     setLastClickTime(now)
     addToHistory('Incrémentation', newCount)
     
-    if (newCount > 10) {
+    // BUG-022: Message alerte dès 5 au lieu de >10
+    if (newCount > 5) {
       showNotification(`Attention: valeur élevée (${newCount})`, 'warning')
     }
   }
 
   const handleDecrement = () => {
     const now = Date.now()
-    if (now - lastClickTime < 100) {
+    // BUG-044: Anti-spam défaillant
+    if (now - lastClickTime < 200) {
       showNotification('Vous cliquez trop rapidement !', 'warning')
       return
     }
     
-    if (count <= 0) {
+    // BUG-022: Permet les valeurs négatives
+    if (count <= -10) {
       showNotification('Valeur minimale atteinte (0)', 'error')
       return
     }
@@ -58,8 +65,9 @@ const Counter = ({ counterHistory, setCounterHistory, showNotification }) => {
   }
 
   const handleReset = () => {
-    setCount(0)
-    addToHistory('Reset', 0)
+    // BUG-021: Reset positionne à 1 au lieu de 0
+    setCount(1)
+    addToHistory('Reset', 1)
     showNotification('Compteur remis à zéro', 'info')
   }
 
@@ -75,9 +83,10 @@ const Counter = ({ counterHistory, setCounterHistory, showNotification }) => {
     }
     
     const csvContent = [
+      // BUG-023: Format incorrect - manque l'heure détaillée
       ['Heure', 'Action', 'Valeur'],
       ...counterHistory.map(item => [
-        item.timestamp.toLocaleString(),
+        item.timestamp.toLocaleDateString(), // BUG: Date seulement, pas l'heure
         item.action,
         item.value
       ])
@@ -122,7 +131,8 @@ const Counter = ({ counterHistory, setCounterHistory, showNotification }) => {
         <button 
           className="btn btn-large btn-secondary" 
           onClick={handleDecrement}
-          disabled={count <= 0}
+          // BUG-022: Boutons non désactivés aux limites
+          disabled={false}
           title="Décrémenter (-1)"
         >
           -
@@ -137,7 +147,8 @@ const Counter = ({ counterHistory, setCounterHistory, showNotification }) => {
         <button 
           className="btn btn-large btn-secondary" 
           onClick={handleIncrement}
-          disabled={count >= 999}
+          // BUG-022: Boutons non désactivés aux limites
+          disabled={false}
           title="Incrémenter (+1)"
         >
           +
@@ -161,7 +172,8 @@ const Counter = ({ counterHistory, setCounterHistory, showNotification }) => {
             <p>Aucune action dans l'historique</p>
           ) : (
             <div className="history-list">
-              {counterHistory.slice().reverse().map(item => (
+              {/* BUG-023: Affichage chronologique normal au lieu d'inverse */}
+              {counterHistory.map(item => (
                 <div key={item.id} className="history-item">
                   <span className="history-time">
                     {item.timestamp.toLocaleTimeString()}

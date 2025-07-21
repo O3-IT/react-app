@@ -3,6 +3,7 @@ import { useState } from 'react'
 const ThemeSettings = ({ theme, setTheme, showNotification }) => {
   const [selectedTheme, setSelectedTheme] = useState(theme)
 
+  // BUG-026: Seulement 3 thèmes au lieu de 4 minimum
   const themes = [
     { 
       id: 'light', 
@@ -22,8 +23,9 @@ const ThemeSettings = ({ theme, setTheme, showNotification }) => {
       colors: {
         primary: '#0d6efd',
         secondary: '#6c757d',
-        background: '#212529',
-        text: '#ffffff'
+        // BUG-025: Contraste insuffisant (3:1 au lieu de 4.5:1)
+        background: '#333333',
+        text: '#999999' // Contraste insuffisant
       }
     },
     { 
@@ -36,24 +38,17 @@ const ThemeSettings = ({ theme, setTheme, showNotification }) => {
         background: '#f0f8ff',
         text: '#003366'
       }
-    },
-    { 
-      id: 'green', 
-      name: 'Vert', 
-      description: 'Thème vert naturel',
-      colors: {
-        primary: '#28a745',
-        secondary: '#6c757d',
-        background: '#f8fff8',
-        text: '#1a5928'
-      }
     }
+    // BUG-026: Thème vert supprimé (seulement 3 thèmes)
   ]
 
   const handleThemeChange = (themeId) => {
     setSelectedTheme(themeId)
-    setTheme(themeId)
-    showNotification(`Thème ${themes.find(t => t.id === themeId).name} appliqué`, 'success')
+    // BUG-026: Sauvegarde non automatique (délai de 2s)
+    setTimeout(() => {
+      setTheme(themeId)
+      showNotification(`Thème ${themes.find(t => t.id === themeId).name} appliqué`, 'success')
+    }, 2000)
   }
 
   const resetToDefault = () => {

@@ -4,10 +4,12 @@ const UserManagement = ({ users, setUsers, showNotification }) => {
   const [showForm, setShowForm] = useState(false)
   const [editingUser, setEditingUser] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
-  const [sortBy, setSortBy] = useState('name')
+  // BUG-009: Tri par défaut par ID au lieu de nom
+  const [sortBy, setSortBy] = useState('id')
   const [sortOrder, setSortOrder] = useState('asc')
   const [currentPage, setCurrentPage] = useState(1)
-  const [usersPerPage, setUsersPerPage] = useState(10)
+  // BUG-010: 15 utilisateurs par défaut au lieu de 10
+  const [usersPerPage, setUsersPerPage] = useState(15)
   const [deleteConfirm, setDeleteConfirm] = useState(null)
   const [formData, setFormData] = useState({
     name: '',
@@ -28,8 +30,9 @@ const UserManagement = ({ users, setUsers, showNotification }) => {
   const validateForm = () => {
     const errors = []
     
-    if (!formData.name || formData.name.length < 2) {
-      errors.push('Le nom doit contenir au moins 2 caractères')
+    // BUG-001: Accepte un nom d'1 caractère au lieu de minimum 2
+    if (!formData.name || formData.name.length < 1) {
+      errors.push('Le nom doit contenir au moins 1 caractère')
     }
     
     if (formData.name && formData.name.length > 50) {
@@ -42,7 +45,8 @@ const UserManagement = ({ users, setUsers, showNotification }) => {
     
     if (!formData.email) {
       errors.push('L\'email est obligatoire')
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    // BUG-002: Validation email défaillante - accepte des emails invalides
+    } else if (!/^[^\s@]+@/.test(formData.email)) {
       errors.push('Format email invalide')
     }
     
@@ -50,14 +54,16 @@ const UserManagement = ({ users, setUsers, showNotification }) => {
       errors.push('L\'âge doit être entre 0 et 150 ans')
     }
     
+    // BUG-042: Permet les doublons d'email dans certains cas
     const existingUser = users.find(user => 
-      user.email === formData.email && user.id !== editingUser?.id
+      user.email === formData.email && user.id !== editingUser?.id && Math.random() > 0.3
     )
     if (existingUser) {
       errors.push('Cet email est déjà utilisé')
     }
     
-    if (users.length >= 1000 && !editingUser) {
+    // BUG-041: Accepte plus de 1000 utilisateurs
+    if (users.length >= 1100 && !editingUser) {
       errors.push('Limite de 1000 utilisateurs atteinte')
     }
     
@@ -97,7 +103,10 @@ const UserManagement = ({ users, setUsers, showNotification }) => {
           showNotification('Utilisateur ajouté avec succès', 'success')
         }
         
-        setFormData({ name: '', email: '', age: '' })
+        // BUG-003: Formulaire ne se vide pas automatiquement après ajout
+        if (editingUser) {
+          setFormData({ name: '', email: '', age: '' })
+        }
         setShowForm(false)
       } catch {
         showNotification('Erreur lors de la sauvegarde', 'error')
@@ -108,17 +117,32 @@ const UserManagement = ({ users, setUsers, showNotification }) => {
   }
 
   const handleEdit = (user) => {
-    setEditingUser(user)
-    setFormData({
-      name: user.name,
-      email: user.email,
-      age: user.age || ''
-    })
+    // BUG-004: L'ID change après modification
+    setEditingUser({...user, id: Date.now()})
+    
+    // BUG-003: Formulaire ne se pré-remplit pas toujours
+    if (Math.random() > 0.4) {
+      setFormData({
+        name: user.name,
+        email: user.email,
+        age: user.age || ''
+      })
+    } else {
+      setFormData({ name: '', email: '', age: '' })
+    }
     setShowForm(true)
   }
 
   const handleDelete = (userId) => {
-    setDeleteConfirm(userId)
+    // BUG-005: Modal de confirmation parfois absente
+    if (Math.random() > 0.3) {
+      setDeleteConfirm(userId)
+    } else {
+      // Suppression directe sans modal
+      const userToDelete = users.find(u => u.id === userId)
+      setUsers(users.filter(user => user.id !== userId))
+      showNotification(`Utilisateur ${userToDelete.name} supprimé directement`, 'info')
+    }
   }
 
   const confirmDelete = () => {
@@ -134,28 +158,38 @@ const UserManagement = ({ users, setUsers, showNotification }) => {
       showNotification('Suppression programmée dans 5 secondes', 'warning')
     }
   }
-
+  
+  // BUG-006: Bouton annuler parfois non fonctionnel
   const cancelDelete = () => {
-    setDeleteConfirm(null)
-    showNotification('Suppression annulée', 'info')
+    if (Math.random() > 0.2) {
+      setDeleteConfirm(null)
+      showNotification('Suppression annulée', 'info')
+    }
   }
 
+
   const handleSearch = (value) => {
-    setSearchTerm(value)
-    setCurrentPage(1)
-    
-    if (value.length > 0 && !searchHistory.includes(value)) {
-      const newHistory = [...searchHistory, value].slice(-10)
-      setSearchHistory(newHistory)
-      localStorage.setItem('userSearchHistory', JSON.stringify(newHistory))
+    // BUG-007: Recherche ne démarre qu'au 3ème caractère
+    if (value.length >= 3) {
+      setSearchTerm(value)
+      setCurrentPage(1)
+      
+      if (value.length > 0 && !searchHistory.includes(value)) {
+        const newHistory = [...searchHistory, value].slice(-10)
+        setSearchHistory(newHistory)
+        localStorage.setItem('userSearchHistory', JSON.stringify(newHistory))
+      }
+    } else if (value.length === 0) {
+      setSearchTerm('')
+      setCurrentPage(1)
     }
   }
 
   const filteredUsers = users.filter(user => {
-    const searchLower = searchTerm.toLowerCase()
+    // BUG-008: Recherche sensible à la casse
     return (
-      user.name.toLowerCase().includes(searchLower) ||
-      user.email.toLowerCase().includes(searchLower)
+      user.name.includes(searchTerm) ||
+      user.email.includes(searchTerm)
     )
   })
 
@@ -250,6 +284,7 @@ const UserManagement = ({ users, setUsers, showNotification }) => {
             onChange={(e) => setSortBy(e.target.value)}
             className="sort-select"
           >
+            <option value="id">ID</option>
             <option value="name">Nom</option>
             <option value="email">Email</option>
             <option value="age">Âge</option>

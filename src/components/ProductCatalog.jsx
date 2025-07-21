@@ -12,7 +12,8 @@ const ProductCatalog = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [sortBy, setSortBy] = useState('name')
-  const [filterCategory, setFilterCategory] = useState('all')
+  // BUG-015: Filtre par défaut pas sur "Toutes"
+  const [filterCategory, setFilterCategory] = useState('Informatique')
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [showCart, setShowCart] = useState(false)
   const [showCheckout, setShowCheckout] = useState(false)
@@ -32,12 +33,20 @@ const ProductCatalog = ({
   }, [])
 
   const handleSearch = (value) => {
-    setSearchTerm(value)
-    
-    if (value.length > 0 && !searchHistory.includes(value)) {
-      const newHistory = [...searchHistory, value].slice(-10)
-      setSearchHistory(newHistory)
-      localStorage.setItem('productSearchHistory', JSON.stringify(newHistory))
+    // BUG-013: Crash avec certains caractères spéciaux
+    try {
+      if (value.includes('[') || value.includes(']') || value.includes('{') || value.includes('}')) {
+        throw new Error('Caractères non supportés')
+      }
+      setSearchTerm(value)
+      
+      if (value.length > 0 && !searchHistory.includes(value)) {
+        const newHistory = [...searchHistory, value].slice(-10)
+        setSearchHistory(newHistory)
+        localStorage.setItem('productSearchHistory', JSON.stringify(newHistory))
+      }
+    } catch (error) {
+      showNotification('Erreur de recherche avec ces caractères', 'error')
     }
   }
 
@@ -65,7 +74,8 @@ const ProductCatalog = ({
   const cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0)
 
   const handleAddToCart = (product) => {
-    if (cart.length >= 50) {
+    // BUG-043: Limite panier dépassée (60 au lieu de 50)
+    if (cart.length >= 60) {
       showNotification('Panier plein (50 articles max)', 'error')
       return
     }
@@ -112,12 +122,13 @@ const ProductCatalog = ({
 
       <div className="catalog-filters">
         <div className="search-container">
+          {/* BUG-012: Champ masqué sur mobile */}
           <input
             type="text"
             placeholder="Rechercher un produit..."
             value={searchTerm}
             onChange={(e) => handleSearch(e.target.value)}
-            className="search-input"
+            className="search-input mobile-hidden"
             maxLength={100}
           />
           {searchHistory.length > 0 && (
@@ -143,7 +154,8 @@ const ProductCatalog = ({
             className="sort-select"
           >
             <option value="name">Tri par nom</option>
-            <option value="price">Tri par prix</option>
+            {/* BUG-014: Option prix croissant manquante */}
+            <option value="price">Tri par prix (décroissant)</option>
           </select>
         </div>
 
@@ -192,7 +204,8 @@ const ProductCatalog = ({
       </div>
 
       {selectedProduct && (
-        <div className="modal-overlay" onClick={() => setSelectedProduct(null)}>
+        <div className="modal-overlay">
+          {/* BUG-016 & BUG-017: ESC et clic extérieur non fonctionnels */}
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <h3>{selectedProduct.name}</h3>

@@ -3,10 +3,12 @@
   width: 100%;
   background-color: #ffffff;
   color: #333333;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  /* BUG-025 & BUG-045: Transitions lentes - 1s au lieu de 0.3s max */
+  transition: background-color 1s ease, color 1s ease;
 }
 
 .app.theme-dark {
+  /* BUG-024: Mode sombre par défaut activé (géré en JS) */
   background-color: #333333;
   color: #ffffff;
 }
@@ -434,7 +436,8 @@
   background-color: #218838;
 }
 
-@media (max-width: 768px) {
+/* BUG-027: Breakpoint incorrect - Mobile 600px au lieu de 768px */
+@media (max-width: 600px) {
   .header {
     padding: 1rem;
   }
@@ -506,18 +509,27 @@
   box-sizing: border-box;
 }
 
+/* BUG-028: Taille police et touch targets trop petits */
 @media (max-width: 480px) {
   .form-group input {
     width: 120%;
     margin-left: -10%;
+    font-size: 12px; /* BUG: Trop petit sur mobile (min: 14px) */
+  }
+  
+  /* BUG-028: Touch targets trop petits - 30px au lieu de 44px minimum */
+  .btn {
+    min-height: 30px;
+    padding: 0.4rem 0.8rem;
   }
 }
 
 /* Bug #3: Notifications qui se chevauchent */
+/* BUG-032: Position incorrecte - bas-gauche au lieu de top-right */
 .notification-container {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  bottom: 20px;
+  left: 20px;
   z-index: 1000;
   max-width: 400px;
 }
@@ -1115,9 +1127,20 @@
   align-items: flex-start;
 }
 
+/* BUG-012: Champ masqué sur mobile */
 .search-container {
   flex: 1;
   min-width: 250px;
+}
+
+.mobile-hidden {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .mobile-hidden {
+    display: block;
+  }
 }
 
 .search-history {

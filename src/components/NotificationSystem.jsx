@@ -2,7 +2,8 @@ import { useEffect } from 'react'
 
 const NotificationSystem = ({ notifications }) => {
   useEffect(() => {
-    if (notifications.length > 5) {
+    // BUG-032: File de 10 notifications au lieu de 5 max
+    if (notifications.length > 10) {
       console.warn('Trop de notifications actives')
     }
   }, [notifications])
